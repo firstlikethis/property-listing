@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\District;
 use App\Models\Post;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,7 +28,10 @@ class HomeController extends Controller
             ->latest()
             ->take(12)
             ->get();
+            
+        $districts = District::orderBy('name')->get();
+        $types = Type::orderBy('name')->get();
 
-        return view('home.index', compact('featured', 'latest'));
+        return view('home.index', compact('featured', 'latest', 'districts', 'types'));
     }
 }
