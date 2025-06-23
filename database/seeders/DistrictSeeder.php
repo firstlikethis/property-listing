@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\District;
 use App\Models\Zone;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class DistrictSeeder extends Seeder
 {
@@ -14,73 +13,158 @@ class DistrictSeeder extends Seeder
      */
     public function run(): void
     {
-        // กรุงเทพกลาง
-        $centerZone = Zone::where('name', 'กรุงเทพกลาง')->first();
-        if ($centerZone) {
-            $districts = [
-                'พระนคร', 'ดุสิต', 'ป้อมปราบศัตรูพ่าย', 'สัมพันธวงศ์', 'ดินแดง', 'ห้วยขวาง', 'พญาไท', 'ราชเทวี', 'วังทองหลาง'
-            ];
-            $this->createDistricts($districts, $centerZone->id);
-        }
-
-        // กรุงเทพเหนือ
-        $northZone = Zone::where('name', 'กรุงเทพเหนือ')->first();
-        if ($northZone) {
-            $districts = [
-                'จตุจักร', 'บางซื่อ', 'ลาดพร้าว', 'หลักสี่', 'ดอนเมือง', 'สายไหม', 'บางเขน'
-            ];
-            $this->createDistricts($districts, $northZone->id);
-        }
-
-        // กรุงเทพใต้
-        $southZone = Zone::where('name', 'กรุงเทพใต้')->first();
-        if ($southZone) {
-            $districts = [
-                'คลองเตย', 'บางคอแหลม', 'ปทุมวัน', 'บางรัก', 'สาทร', 'ยานนาวา', 'วัฒนา', 'พระโขนง', 'สวนหลวง', 'บางนา'
-            ];
-            $this->createDistricts($districts, $southZone->id);
-        }
-
-        // กรุงเทพตะวันออก
-        $eastZone = Zone::where('name', 'กรุงเทพตะวันออก')->first();
-        if ($eastZone) {
-            $districts = [
-                'บางกะปิ', 'สะพานสูง', 'บึงกุ่ม', 'คันนายาว', 'ลาดกระบัง', 'มีนบุรี', 'หนองจอก', 'คลองสามวา', 'ประเวศ'
-            ];
-            $this->createDistricts($districts, $eastZone->id);
-        }
-
-        // กรุงเทพตะวันตก
-        $westZone = Zone::where('name', 'กรุงเทพตะวันตก')->first();
-        if ($westZone) {
-            $districts = [
-                'ธนบุรี', 'คลองสาน', 'จอมทอง', 'บางขุนเทียน', 'บางบอน', 'บางแค', 'ภาษีเจริญ', 'หนองแขม', 'ราษฎร์บูรณะ', 'ทุ่งครุ', 'ทวีวัฒนา', 'ตลิ่งชัน', 'บางพลัด', 'บางกอกน้อย', 'บางกอกใหญ่'
-            ];
-            $this->createDistricts($districts, $westZone->id);
-        }
-
-        // ปริมณฑล
-        $suburbanZone = Zone::where('name', 'ปริมณฑล')->first();
-        if ($suburbanZone) {
-            $districts = [
-                'นนทบุรี', 'ปากเกร็ด', 'บางบัวทอง', 'บางใหญ่', 'บางกรวย', 'ไทรน้อย',
-                'สมุทรปราการ', 'พระประแดง', 'พระสมุทรเจดีย์', 'บางพลี', 'บางบ่อ', 'เมืองสมุทรปราการ',
-                'ปทุมธานี', 'คลองหลวง', 'ธัญบุรี', 'ลำลูกกา', 'ลาดหลุมแก้ว', 'สามโคก', 'หนองเสือ'
-            ];
-            $this->createDistricts($districts, $suburbanZone->id);
-        }
-    }
-
-    /**
-     * Create districts for a zone.
-     */
-    private function createDistricts(array $districts, $zoneId)
-    {
-        foreach ($districts as $name) {
+        // กรุงเทพชั้นใน
+        $innerBangkok = Zone::where('slug', 'inner-bangkok')->first();
+        $innerBangkokDistricts = [
+            ['name' => 'ปทุมวัน', 'slug' => 'pathumwan'],
+            ['name' => 'บางรัก', 'slug' => 'bangrak'],
+            ['name' => 'สาทร', 'slug' => 'sathorn'],
+            ['name' => 'วัฒนา', 'slug' => 'watthana'],
+            ['name' => 'คลองเตย', 'slug' => 'khlong-toei'],
+            ['name' => 'ยานนาวา', 'slug' => 'yan-nawa'],
+            ['name' => 'พระโขนง', 'slug' => 'phra-khanong']
+        ];
+        
+        foreach ($innerBangkokDistricts as $district) {
             District::create([
-                'name' => $name,
-                'slug' => Str::slug($name),
-                'zone_id' => $zoneId,
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $innerBangkok->id,
+            ]);
+        }
+        
+        // กรุงเทพชั้นกลาง
+        $middleBangkok = Zone::where('slug', 'middle-bangkok')->first();
+        $middleBangkokDistricts = [
+            ['name' => 'ดินแดง', 'slug' => 'din-daeng'],
+            ['name' => 'ห้วยขวาง', 'slug' => 'huai-khwang'],
+            ['name' => 'พญาไท', 'slug' => 'phaya-thai'],
+            ['name' => 'ราชเทวี', 'slug' => 'ratchathewi'],
+            ['name' => 'จตุจักร', 'slug' => 'chatuchak'],
+            ['name' => 'บางซื่อ', 'slug' => 'bang-sue'],
+            ['name' => 'ลาดพร้าว', 'slug' => 'lat-phrao']
+        ];
+        
+        foreach ($middleBangkokDistricts as $district) {
+            District::create([
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $middleBangkok->id,
+            ]);
+        }
+        
+        // กรุงเทพชั้นนอก
+        $outerBangkok = Zone::where('slug', 'outer-bangkok')->first();
+        $outerBangkokDistricts = [
+            ['name' => 'บางกะปิ', 'slug' => 'bang-kapi'],
+            ['name' => 'บางเขน', 'slug' => 'bang-khen'],
+            ['name' => 'มีนบุรี', 'slug' => 'min-buri'],
+            ['name' => 'ลาดกระบัง', 'slug' => 'lat-krabang'],
+            ['name' => 'หนองจอก', 'slug' => 'nong-chok'],
+            ['name' => 'ประเวศ', 'slug' => 'prawet'],
+            ['name' => 'สวนหลวง', 'slug' => 'suan-luang']
+        ];
+        
+        foreach ($outerBangkokDistricts as $district) {
+            District::create([
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $outerBangkok->id,
+            ]);
+        }
+        
+        // ปริมณฑล
+        $metroArea = Zone::where('slug', 'metropolitan')->first();
+        $metroAreaDistricts = [
+            ['name' => 'นนทบุรี', 'slug' => 'nonthaburi'],
+            ['name' => 'ปากเกร็ด', 'slug' => 'pak-kret'],
+            ['name' => 'บางใหญ่', 'slug' => 'bang-yai'],
+            ['name' => 'สมุทรปราการ', 'slug' => 'samut-prakan'],
+            ['name' => 'บางพลี', 'slug' => 'bang-phli'],
+            ['name' => 'คลองหลวง', 'slug' => 'khlong-luang'],
+            ['name' => 'ธัญบุรี', 'slug' => 'thanyaburi']
+        ];
+        
+        foreach ($metroAreaDistricts as $district) {
+            District::create([
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $metroArea->id,
+            ]);
+        }
+        
+        // หาดใหญ่
+        $haiYai = Zone::where('slug', 'hatyai')->first();
+        $haiYaiDistricts = [
+            ['name' => 'หาดใหญ่', 'slug' => 'hat-yai'],
+            ['name' => 'คลองแห', 'slug' => 'khlong-hae'],
+            ['name' => 'คอหงส์', 'slug' => 'kho-hong'],
+            ['name' => 'ควนลัง', 'slug' => 'khuan-lang'],
+            ['name' => 'คลองหลา', 'slug' => 'khlong-la']
+        ];
+        
+        foreach ($haiYaiDistricts as $district) {
+            District::create([
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $haiYai->id,
+            ]);
+        }
+        
+        // เชียงใหม่
+        $chiangMai = Zone::where('slug', 'chiang-mai')->first();
+        $chiangMaiDistricts = [
+            ['name' => 'เมืองเชียงใหม่', 'slug' => 'mueang-chiang-mai'],
+            ['name' => 'นิมมานเหมินทร์', 'slug' => 'nimman'],
+            ['name' => 'สันทราย', 'slug' => 'san-sai'],
+            ['name' => 'ช้างเผือก', 'slug' => 'chang-phueak'],
+            ['name' => 'แม่ริม', 'slug' => 'mae-rim'],
+            ['name' => 'สันกำแพง', 'slug' => 'san-kamphaeng']
+        ];
+        
+        foreach ($chiangMaiDistricts as $district) {
+            District::create([
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $chiangMai->id,
+            ]);
+        }
+        
+        // พัทยา
+        $pattaya = Zone::where('slug', 'pattaya')->first();
+        $pattayaDistricts = [
+            ['name' => 'พัทยาเหนือ', 'slug' => 'north-pattaya'],
+            ['name' => 'พัทยากลาง', 'slug' => 'central-pattaya'],
+            ['name' => 'พัทยาใต้', 'slug' => 'south-pattaya'],
+            ['name' => 'จอมเทียน', 'slug' => 'jomtien'],
+            ['name' => 'บางละมุง', 'slug' => 'bang-lamung'],
+            ['name' => 'นาเกลือ', 'slug' => 'na-kluea']
+        ];
+        
+        foreach ($pattayaDistricts as $district) {
+            District::create([
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $pattaya->id,
+            ]);
+        }
+        
+        // ภูเก็ต
+        $phuket = Zone::where('slug', 'phuket')->first();
+        $phuketDistricts = [
+            ['name' => 'เมืองภูเก็ต', 'slug' => 'mueang-phuket'],
+            ['name' => 'ป่าตอง', 'slug' => 'patong'],
+            ['name' => 'กะทู้', 'slug' => 'kathu'],
+            ['name' => 'ฉลอง', 'slug' => 'chalong'],
+            ['name' => 'กะรน', 'slug' => 'karon'],
+            ['name' => 'กมลา', 'slug' => 'kamala']
+        ];
+        
+        foreach ($phuketDistricts as $district) {
+            District::create([
+                'name' => $district['name'],
+                'slug' => $district['slug'],
+                'zone_id' => $phuket->id,
             ]);
         }
     }

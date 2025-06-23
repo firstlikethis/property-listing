@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Zone;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class ZoneSeeder extends Seeder
 {
@@ -14,22 +13,20 @@ class ZoneSeeder extends Seeder
     public function run(): void
     {
         $zones = [
-            'กรุงเทพกลาง',
-            'กรุงเทพเหนือ',
-            'กรุงเทพใต้',
-            'กรุงเทพตะวันออก',
-            'กรุงเทพตะวันตก',
-            'ปริมณฑล',
-            'เชียงใหม่',
-            'พัทยา',
-            'หัวหิน',
-            'ภูเก็ต',
+            ['name' => 'กรุงเทพชั้นใน', 'slug' => 'inner-bangkok'],
+            ['name' => 'กรุงเทพชั้นกลาง', 'slug' => 'middle-bangkok'],
+            ['name' => 'กรุงเทพชั้นนอก', 'slug' => 'outer-bangkok'],
+            ['name' => 'ปริมณฑล', 'slug' => 'metropolitan'],
+            ['name' => 'หาดใหญ่', 'slug' => 'hatyai'],
+            ['name' => 'เชียงใหม่', 'slug' => 'chiang-mai'],
+            ['name' => 'พัทยา', 'slug' => 'pattaya'],
+            ['name' => 'ภูเก็ต', 'slug' => 'phuket'],
         ];
 
-        foreach ($zones as $name) {
+        foreach ($zones as $zone) {
             Zone::create([
-                'name' => $name,
-                'slug' => Str::slug($name),
+                'name' => $zone['name'],
+                'slug' => $zone['slug'],
             ]);
         }
     }

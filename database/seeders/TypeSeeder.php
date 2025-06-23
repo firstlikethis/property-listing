@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Type;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class TypeSeeder extends Seeder
 {
@@ -14,24 +13,23 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         $types = [
-            'คอนโดมิเนียม',
-            'อพาร์ตเมนต์',
-            'หอพัก',
-            'บ้านเดี่ยว',
-            'บ้านแฝด',
-            'ทาวน์โฮม',
-            'ทาวน์เฮ้าส์',
-            'โฮมออฟฟิศ',
-            'อาคารพาณิชย์',
-            'วิลล่า',
-            'รีสอร์ท',
-            'แมนชั่น'
+            ['name' => 'คอนโดมิเนียม', 'slug' => 'condominium'],
+            ['name' => 'อพาร์ทเมนท์', 'slug' => 'apartment'],
+            ['name' => 'หอพัก', 'slug' => 'dormitory'],
+            ['name' => 'บ้านเดี่ยว', 'slug' => 'single-house'],
+            ['name' => 'บ้านแฝด', 'slug' => 'duplex-house'],
+            ['name' => 'ทาวน์โฮม', 'slug' => 'townhome'],
+            ['name' => 'ทาวน์เฮ้าส์', 'slug' => 'townhouse'],
+            ['name' => 'โฮมออฟฟิศ', 'slug' => 'home-office'],
+            ['name' => 'โรงแรม', 'slug' => 'hotel'],
+            ['name' => 'รีสอร์ท', 'slug' => 'resort'],
+            ['name' => 'พูลวิลล่า', 'slug' => 'pool-villa']
         ];
 
-        foreach ($types as $name) {
+        foreach ($types as $type) {
             Type::create([
-                'name' => $name,
-                'slug' => Str::slug($name),
+                'name' => $type['name'],
+                'slug' => $type['slug']
             ]);
         }
     }
